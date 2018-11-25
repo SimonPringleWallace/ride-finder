@@ -11,11 +11,14 @@ class App extends React.Component {
     this.state = {
       // the total networks coming back from the citybik(filled on componentDidMount)
       networks: [],
-      //
+      // the total countries coming back from the citybik(filled on componentDidMount)
       countries: [],
+      // stations at any given city-country-network filled from bikeInfo()
       stations: [],
+      // set on user select of country - getCountryCities()
       activeCountry: "",
       cityList: ["Abu Dhabi", "Al Ain", "Dubai"],
+      // set on user select of country - getCountryCities() or getCityNetworks()
       activeCity: "Abu Dhabi",
       activeNetwork:"ADCB Bikeshare",
       networkOptions:['ADCB Bikeshare']
@@ -53,13 +56,12 @@ filterNetworks = () => {
   this.setState({networkOptions: networkOptions, activeNetwork: networkOptions[0]})
 }
 
-  seeNetworks = (e) => {
+  getBikeInfo = (e) => {
     e.preventDefault()
     const filteredNetworks = this.state.networks
       .filter(network => network.name === this.state.activeNetwork)
       .map(network => network.id)
       .join();
-      console.log(filteredNetworks)
     this.bikeInfo(filteredNetworks);
   };
 
@@ -106,7 +108,7 @@ filterNetworks = () => {
             {this.createDropdownOptions('networkOptions', 'network')}
           </select>
 
-          <form onSubmit={this.seeNetworks}><button>Find Bikes</button></form>
+          <form onSubmit={this.getBikeInfo}><button>Find Bikes</button></form>
           <h4>Bicycle Network: {this.state.activeNetwork}</h4>
         {this.createStationContainers()}
       </div>
