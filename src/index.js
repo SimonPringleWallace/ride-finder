@@ -93,7 +93,7 @@ filterNetworks = () => {
   render() {
 
     return (
-      <div className='root'>
+    <React.Fragment>
       <Hero
       getCountryCities={this.getCountryCities.bind(this)}
       getCityNetworks={this.getCityNetworks}
@@ -103,7 +103,7 @@ filterNetworks = () => {
       />
       <h4>Bicycle Network: {this.state.activeNetwork}</h4>
         {this.createStationContainers()}
-      </div>
+    </React.Fragment>
     );
   }
 }

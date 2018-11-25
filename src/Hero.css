@@ -1,0 +1,40 @@
+.hero{
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
+ background-image: url('./images/bike.jpg');
+ background-size: cover;
+ height: 400px;
+}
+.hero h2 {
+  font-size: 75px;
+  color: white;
+  margin-top:-60px;
+  margin-bottom: -20px;
+}
+
+.hero h6 {
+  font-size: 14px;
+  color: white;
+}
+.selections {
+  font-size:30px;
+  font-weight:400;
+  color:white;
+  font-weight: 300;
+  margin-top: 80px;
+  text-align:center;
+}
+
+.selections select {
+  width: 150px;
+  font-size: 16px;
+  margin: 15px;
+}
+
+.selections button {
+  margin-top: 60px;
+  font-size: 18px;
+  border-radius: 4px;
+}
