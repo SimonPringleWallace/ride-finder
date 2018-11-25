@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from 'react-dom'
 import { bikeInfo, networkList } from "./apis.js";
 import {getCountryCities, getCityNetworks, setNetwork} from './handlers.js';
+import { Hero } from './hero.js'
 import { BikeLocation } from "./bikeLocation";
 import './index.css'
 
@@ -36,6 +37,8 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
+    //first request to API to get all the network data the user will need for
+    //the rest of their session
     this.networkList();
   };
 
@@ -72,12 +75,9 @@ filterNetworks = () => {
   )
 
   createStationContainers = () => {
-    console.log("createStationContainers triggered");
     if (this.state.stations === null) {
-      console.log("createStationContainers if block triggered");
       return <BikeLocation name={"No Stations Found"} />;
     } else {
-      console.log("createStationContainers else block triggered");
       return this.state.stations.map(station => (
         <BikeLocation
           key={station.id}
@@ -94,22 +94,14 @@ filterNetworks = () => {
 
     return (
       <div className='root'>
-      <h2>Ride Finder</h2>
-         <label>Country:</label>
-         <select onChange={this.getCountryCities}>
-            {this.createDropdownOptions('countries', 'country')}
-         </select>
-          <label>City:</label>
-          <select onChange={this.getCityNetworks}>
-            {this.createDropdownOptions('cityList', 'city')}
-          </select>
-          <label>Network:</label>
-          <select onChange={this.setNetwork}>
-            {this.createDropdownOptions('networkOptions', 'network')}
-          </select>
-
-          <form onSubmit={this.getBikeInfo}><button>Find Bikes</button></form>
-          <h4>Bicycle Network: {this.state.activeNetwork}</h4>
+      <Hero
+      getCountryCities={this.getCountryCities.bind(this)}
+      getCityNetworks={this.getCityNetworks}
+      setNetwork={this.setNetwork}
+      createDropdownOptions={this.createDropdownOptions.bind(this)}
+      getBikeInfo={this.getBikeInfo.bind(this)}
+      />
+      <h4>Bicycle Network: {this.state.activeNetwork}</h4>
         {this.createStationContainers()}
       </div>
     );
