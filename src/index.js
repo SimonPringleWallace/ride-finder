@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { bikeInfo, networkList } from "./apis.js";
 import {getCountryCities, getCityNetworks, setNetwork} from './handlers.js';
 import { BikeLocation } from "./bikeLocation";
+import './index.css'
 
 class App extends React.Component {
   constructor() {
@@ -62,6 +63,12 @@ filterNetworks = () => {
     this.bikeInfo(filteredNetworks);
   };
 
+  createDropdownOptions = (stateKey, value) => (
+    this.state[stateKey].map(value => {
+      return <option key={value}>{value}</option>
+    })
+  )
+
   createStationContainers = () => {
     console.log("createStationContainers triggered");
     if (this.state.stations === null) {
@@ -82,26 +89,23 @@ filterNetworks = () => {
     }
 
   render() {
-    console.log(`this.state.networkOptions = ${this.state.networkOptions}`);
-    console.log(`this.state.activeCountry = ${this.state.activeCountry}`);
-    console.log(`this.state.activeCity = ${this.state.activeCity}`);
-
-    const countryOptions = this.state.countries.map(country => {
-      return <option key={country}>{country}</option>;
-    });
-    const cityOptions = this.state.cityList.map(city => {
-      return <option key={city}>{city}</option>;
-    });
-    const networkOptions = this.state.networkOptions.map(network => {
-      return <option key={network}>{network}</option>;
-    });
 
     return (
       <div className='root'>
       <h2>Ride Finder</h2>
-        <select onChange={this.getCountryCities}>{countryOptions}</select>
-          <select onChange={this.getCityNetworks}>{cityOptions}</select>
-          <select onChange={this.setNetwork}>{networkOptions}</select>
+         <label>Country:</label>
+         <select onChange={this.getCountryCities}>
+            {this.createDropdownOptions('countries', 'country')}
+         </select>
+          <label>City:</label>
+          <select onChange={this.getCityNetworks}>
+            {this.createDropdownOptions('cityList', 'city')}
+          </select>
+          <label>Network:</label>
+          <select onChange={this.setNetwork}>
+            {this.createDropdownOptions('networkOptions', 'network')}
+          </select>
+
           <form onSubmit={this.seeNetworks}><button>Find Bikes</button></form>
           <h4>Bicycle Network: {this.state.activeNetwork}</h4>
         {this.createStationContainers()}
