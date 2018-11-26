@@ -23,7 +23,8 @@ class App extends React.Component {
       activeCity: "Abu Dhabi",
       activeNetwork:"ADCB Bikeshare",
       networkOptions:['ADCB Bikeshare'],
-      displayNetworkName:''
+      displayNetworkName:'',
+      bikeLocationToggle: false
     };
     // get information about number of bikes and slots at various stations
     this.bikeInfo = bikeInfo.bind(this);
@@ -60,9 +61,10 @@ filterNetworks = () => {
   this.setState({networkOptions: networkOptions, activeNetwork: networkOptions[0]})
 }
 
-  getBikeInfo = async(e) => {
+  getBikeInfo = (e) => {
     e.preventDefault()
-  await this.setState({displayNetworkName: this.state.activeNetwork})
+    this.setState({displayNetworkName: this.state.activeNetwork,
+                   bikeLocationToggle: true })
     const filteredNetworks = this.state.networks
       .filter(network => network.name === this.state.activeNetwork)
       .filter(network => network.location.city === this.state.activeCity)
@@ -80,7 +82,7 @@ filterNetworks = () => {
   createStationContainers = () => {
     if (this.state.stations === null) {
       return <BikeLocation name={"No Stations Found"} />;
-    } else {
+    }else if (this.state.bikeLocationToggle){
       return this.state.stations.map(station => (
         <BikeLocation
           key={station.id}
@@ -90,7 +92,9 @@ filterNetworks = () => {
           timestamp={station.timestamp}
         />
       ))
-     }
+    }else{
+      return <div></div>
+    }
     }
 
   render() {
