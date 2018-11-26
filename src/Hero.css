@@ -19,6 +19,8 @@
   color: white;
 }
 .selections {
+  display: flex;
+  flex-direction: row;
   font-size:30px;
   font-weight:400;
   color:white;
@@ -33,8 +35,28 @@
   margin: 15px;
 }
 
-.selections button {
+.hero button {
   margin-top: 60px;
   font-size: 18px;
   border-radius: 4px;
+}
+
+@media(max-width: 850px){
+  .hero h2 {
+    font-size: 50px;
+    color: white;
+    margin-top: 0px;
+    margin-bottom: -20px;
+  }
+  .selections {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
+  }
+  .selections select {
+    width: 150px;
+    height: 20px;
+    font-size: 14px;
+    margin: 5px;
+  }
 }

@@ -22,8 +22,7 @@ export const Hero = ({getCountryCities, getCityNetworks, setNetwork, createDropd
           <select onChange={setNetwork}>
             {createDropdownOptions('networkOptions', 'network')}
           </select>
-
-          <form onSubmit={getBikeInfo}><button>Find Bikes</button></form>
-    </div>
+      </div>
+    <form onSubmit={getBikeInfo}><button>Find Bikes</button></form>
   </div>
 )
