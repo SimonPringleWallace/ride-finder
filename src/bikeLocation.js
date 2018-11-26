@@ -1,6 +1,7 @@
 import React from "react";
 import "./bike-location.css";
 
+//Display information about specific bike stations
 export const BikeLocation = ({ name, free_bikes, empty_slots, timestamp }) => {
   return (
     <div className="location-flex">

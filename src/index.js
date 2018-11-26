@@ -24,15 +24,16 @@ class App extends React.Component {
       activeNetwork:"ADCB Bikeshare",
       networkOptions:['ADCB Bikeshare'],
       displayNetworkName:'',
-      bikeLocationToggle: false
+      bikeLocationToggle: false,
+      errorState: false
     };
-    // get information about number of bikes and slots at various stations
+    // GET information about number of bikes and slots at various stations
     this.bikeInfo = bikeInfo.bind(this);
-    // get the list of all of the networks (bike share providers) in the citybik
+    // GET the list of all of the networks (bike share providers) in the citybik
     this.networkList = networkList.bind(this);
-    // get all the cities for a selected country
+    // set activeCountry the cities for a selected country
     this.getCountryCities = getCountryCities.bind(this);
-    // get all the networks for a selected city
+    // set activeNetwork all the networks for a selected city
     this.getCityNetworks = getCityNetworks.bind(this);
     // set an active network after it is selected by a user
     this.setNetwork = setNetwork.bind(this);
@@ -44,6 +45,7 @@ class App extends React.Component {
     this.networkList();
   };
 
+  // filter the cities for a selected country
   filterCities = () => {
     let filteredCities = this.state.networks
       .filter(network => network.location.country === this.state.activeCountry)
@@ -52,7 +54,7 @@ class App extends React.Component {
       filteredCities = Array.from(new Set(filteredCities))
     this.setState({ cityList: filteredCities, activeCity: filteredCities[0] });
   };
-
+//filter the networks for a selected city
 filterNetworks = () => {
   const networkOptions = this.state.networks
   .filter(network => network.location.city === this.state.activeCity)
@@ -80,7 +82,10 @@ filterNetworks = () => {
   )
 
   createStationContainers = () => {
-    if (this.state.stations === null) {
+    if(this.state.errorState){
+      return <BikeLocation name={"An Error Occured"} />;
+    }
+    else if (this.state.stations === null) {
       return <BikeLocation name={"No Stations Found"} />;
     }else if (this.state.bikeLocationToggle){
       return this.state.stations.map(station => (
@@ -95,7 +100,7 @@ filterNetworks = () => {
     }else{
       return <div></div>
     }
-    }
+  }
 
   render() {
 
