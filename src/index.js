@@ -22,7 +22,8 @@ class App extends React.Component {
       // set on user select of country - getCountryCities() or getCityNetworks()
       activeCity: "Abu Dhabi",
       activeNetwork:"ADCB Bikeshare",
-      networkOptions:['ADCB Bikeshare']
+      networkOptions:['ADCB Bikeshare'],
+      displayNetworkName:''
     };
     // get information about number of bikes and slots at various stations
     this.bikeInfo = bikeInfo.bind(this);
@@ -59,10 +60,12 @@ filterNetworks = () => {
   this.setState({networkOptions: networkOptions, activeNetwork: networkOptions[0]})
 }
 
-  getBikeInfo = (e) => {
+  getBikeInfo = async(e) => {
     e.preventDefault()
+  await this.setState({displayNetworkName: this.state.activeNetwork})
     const filteredNetworks = this.state.networks
       .filter(network => network.name === this.state.activeNetwork)
+      .filter(network => network.location.city === this.state.activeCity)
       .map(network => network.id)
       .join();
     this.bikeInfo(filteredNetworks);
@@ -101,7 +104,7 @@ filterNetworks = () => {
       createDropdownOptions={this.createDropdownOptions.bind(this)}
       getBikeInfo={this.getBikeInfo.bind(this)}
       />
-      <h4>Bicycle Network: {this.state.activeNetwork}</h4>
+      <h4>Bicycle Network: {this.state.displayNetworkName}</h4>
         {this.createStationContainers()}
     </React.Fragment>
     );
